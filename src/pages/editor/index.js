@@ -3,7 +3,7 @@ import SimpleMDE from 'simplemde'
 import marked from 'marked'
 import highlight from 'highlight.js'
 import 'simplemde/dist/simplemde.min.css'
-import './index.less'
+// import './index.less'
 import { Select, Input, Button } from 'antd'
 
 export default class index extends Component {

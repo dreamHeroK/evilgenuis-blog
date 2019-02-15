@@ -133,7 +133,7 @@ class SliderRight extends Component {
       </Link>
     ))
     const linkChildren = this.state.linkList.map(item => (
-      <a key={item._id} target="_blank" href={item.url}>
+      <a key={item._id} target="_blank" href={item.url} rel="noopener noreferrer">
         <Icon
           key={item._id}
           type={item.icon}
