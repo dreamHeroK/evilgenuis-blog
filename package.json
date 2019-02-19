@@ -148,11 +148,12 @@
         {
           "libraryName": "antd",
           "libraryDirectory": "lib",
-          "style": "css"
+          "style": true
         }
       ]
     ]
   },
+  "homepage": "./",
   "devDependencies": {
     "less-loader": "^4.1.0"
   }

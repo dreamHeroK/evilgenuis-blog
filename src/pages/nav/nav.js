@@ -1,20 +1,19 @@
-import './index.less'
-import logo from '../../assets/logo.jpg'
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Layout, Icon, Menu, Row, Col, Button, Drawer } from 'antd'
-import Register from '../register/register'
-import Login from '../login/login'
-import { isMobileOrPc } from '../../utils/utils'
+import './index.less';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Layout, Icon, Menu, Row, Col, Button, Drawer } from 'antd';
+import Register from '../register/register';
+import Login from '../login/login';
+import { isMobileOrPc } from '../../utils/utils';
 
-const { Header } = Layout
-const SubMenu = Menu.SubMenu
-const MenuItemGroup = Menu.ItemGroup
+const { Header } = Layout;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 // @connect(state => state.getIn(['user']), dispatch => bindActionCreators({ }, dispatch))
 class Nav extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isMobile: false,
       visible: false,
@@ -25,131 +24,131 @@ class Nav extends Component {
       register: false,
       nav: '首页',
       navTitle: '首页'
-    }
-    this.menuClick = this.menuClick.bind(this)
-    this.showLoginModal = this.showLoginModal.bind(this)
-    this.showRegisterModal = this.showRegisterModal.bind(this)
-    this.handleLoginCancel = this.handleLoginCancel.bind(this)
-    this.handleRegisterCancel = this.handleRegisterCancel.bind(this)
-    this.initMenu = this.initMenu.bind(this)
-    this.handleMenu = this.handleMenu.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
-    this.showDrawer = this.showDrawer.bind(this)
-    this.onClose = this.onClose.bind(this)
+    };
+    this.menuClick = this.menuClick.bind(this);
+    this.showLoginModal = this.showLoginModal.bind(this);
+    this.showRegisterModal = this.showRegisterModal.bind(this);
+    this.handleLoginCancel = this.handleLoginCancel.bind(this);
+    this.handleRegisterCancel = this.handleRegisterCancel.bind(this);
+    this.initMenu = this.initMenu.bind(this);
+    this.handleMenu = this.handleMenu.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.showDrawer = this.showDrawer.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
   componentDidMount() {
     if (isMobileOrPc()) {
       this.setState({
         isMobile: true
-      })
+      });
     }
-    this.initMenu(this.props.pathname)
+    this.initMenu(this.props.pathname);
   }
 
   showDrawer = () => {
     this.setState({
       visible: true
-    })
-  }
+    });
+  };
 
   onClose = () => {
     this.setState({
       visible: false
-    })
-  }
+    });
+  };
 
   initMenu(name) {
-    let key = '1'
-    let navTitle = ''
+    let key = '1';
+    let navTitle = '';
     if (name === '/') {
-      key = '1'
-      navTitle = '首页'
+      key = '1';
+      navTitle = '首页';
     } else if (name === '/home') {
-      key = '1'
-      navTitle = '首页'
+      key = '1';
+      navTitle = '首页';
     } else if (name === '/hot') {
-      key = '2'
-      navTitle = '热门'
+      key = '2';
+      navTitle = '热门';
     } else if (name === '/timeLine') {
-      key = '3'
-      navTitle = '历程'
+      key = '3';
+      navTitle = '历程';
     } else if (name === '/message') {
-      key = '4'
-      navTitle = '留言'
+      key = '4';
+      navTitle = '留言';
     } else if (name === '/about') {
-      key = '5'
-      navTitle = '关于我'
+      key = '5';
+      navTitle = '关于我';
     } else if (name === '/articleDetail') {
-      key = '6'
-      navTitle = '文章详情'
+      key = '6';
+      navTitle = '文章详情';
     }
     this.setState({
       navTitle,
       menuCurrent: key
-    })
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log('next :', nextProps);
-    this.initMenu(nextProps.pathname)
+    this.initMenu(nextProps.pathname);
   }
 
   handleMenu = e => {
     // console.log('click ', e);
     this.setState({
       menuCurrent: e.key
-    })
-  }
+    });
+  };
 
   handleLogout = e => {
     // console.log('click ', e);
-    const { dispatch } = this.props
+    const { dispatch } = this.props;
     this.setState({
       current: e.key
-    })
-    window.sessionStorage.removeItem('userInfo')
-    dispatch({ type: 'LOGOUT' })
-    this.onClose()
-  }
+    });
+    window.sessionStorage.removeItem('userInfo');
+    dispatch({ type: 'LOGOUT' });
+    this.onClose();
+  };
 
   showLoginModal() {
-    this.onClose()
+    this.onClose();
     // [event.target.name]: event.target.value
     this.setState({
       login: true
-    })
+    });
   }
   showRegisterModal() {
-    this.onClose()
+    this.onClose();
     this.setState({
       register: true
-    })
+    });
   }
   handleLoginCancel() {
     this.setState({
       login: false
-    })
+    });
   }
   handleRegisterCancel() {
     this.setState({
       register: false
-    })
+    });
   }
   menuClick({ key }) {
     this.setState({
       nav: key
-    })
+    });
   }
   toWrite = () => {
-    console.log(this.props, 'props')
-  }
+    console.log(this.props, 'props');
+  };
   render() {
-    let userInfo = ''
+    let userInfo = '';
     if (window.sessionStorage.userInfo) {
-      userInfo = JSON.parse(window.sessionStorage.userInfo)
+      userInfo = JSON.parse(window.sessionStorage.userInfo);
     }
     return (
-      <div className="left">
+      <div className="nav">
         {this.state.isMobile ? (
           <Header
             className="header"
@@ -165,13 +164,6 @@ class Nav extends Component {
             }}
           >
             <Row className="container">
-              <Col style={{ width: '25%', float: 'left', lineHeight: '64px' }}>
-                <a href="http://biaochenxuying.cn/main.html">
-                  <div className="logo">
-                    <img src={logo} alt="" />
-                  </div>
-                </a>
-              </Col>
               <Col style={{ textAlign: 'center', width: '50%', float: 'left' }}>
                 <div className="nav-title"> {this.state.navTitle} </div>
               </Col>
@@ -206,14 +198,18 @@ class Nav extends Component {
               borderBottom: '1px solid #eee'
             }}
           >
+            <div
+              style={{
+                width: '120px',
+                float: 'left',
+                fontSize: '20px',
+                marginLeft: '120px',
+                color: '#333'
+              }}
+            >
+              <a href="/">evil-genuis</a>
+            </div>
             <Row className="container">
-              <Col style={{ width: '120px', float: 'left' }}>
-                <a href="http://biaochenxuying.cn/main.html">
-                  <div className="logo ">
-                    <img src={logo} alt="" />
-                  </div>
-                </a>
-              </Col>
               <Col style={{ width: '680px', float: 'left' }}>
                 <Menu
                   theme="light"
@@ -221,29 +217,29 @@ class Nav extends Component {
                   defaultSelectedKeys={['1']}
                   onClick={this.handleMenu}
                   selectedKeys={[this.state.menuCurrent]}
-                  style={{ lineHeight: '64px', borderBottom: 'none' }}
+                  style={{ lineHeight: '64px', borderBottom: 'none',color:'#333',fontSize:'17px' }}
                 >
                   <Menu.Item key="1">
                     <Link to="/home">
-                      <Icon type="home" theme="outlined" />
+                      <Icon type="home" theme="outlined" style={{fontSize:'20px'}}/>
                       首页
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="2">
                     <Link to="/hot">
-                      <Icon type="fire" theme="outlined" />
+                      <Icon type="fire" theme="outlined"style={{fontSize:'20px'}} />
                       热门
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="3">
                     <Link to="/timeLine">
-                      <Icon type="hourglass" theme="outlined" />
+                      <Icon type="hourglass" theme="outlined"style={{fontSize:'20px'}} />
                       时间轴
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="4">
                     <Link to="/message">
-                      <Icon type="message" theme="outlined" />
+                      <Icon type="message" theme="outlined" style={{fontSize:'20px'}}/>
                       留言
                     </Link>
                   </Menu.Item>
@@ -383,8 +379,8 @@ class Nav extends Component {
           handleCancel={this.handleRegisterCancel}
         />
       </div>
-    )
+    );
   }
 }
 
-export default Nav
+export default Nav;

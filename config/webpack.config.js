@@ -54,7 +54,7 @@ module.exports = function(webpackEnv) {
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
   const shouldUseRelativeAssetPaths = publicPath === './';
-
+  console.log(publicPath, 'publicPath');
   // `publicUrl` is just like `publicPath`, but we will provide it to our app
   // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
@@ -100,15 +100,24 @@ module.exports = function(webpackEnv) {
           ],
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment
         }
-      },
+      }
     ].filter(Boolean);
     if (preProcessor) {
-      loaders.push({
+      let loader = {
         loader: require.resolve(preProcessor),
         options: {
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment
+          sourceMap: shouldUseSourceMap
         }
-      });
+      };
+      if (preProcessor === 'less-loader') {
+        loader.options.modifyVars = {
+          'primary-color': '#25b864',
+          'link-color': '#1DA57A',
+          'border-radius-base': '2px'
+        };
+        loader.options.javascriptEnabled = true;
+      }
+      loaders.push(loader);
     }
     return loaders;
   };
