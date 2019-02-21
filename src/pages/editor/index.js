@@ -1,23 +1,24 @@
-import React, { Component } from 'react'
-import SimpleMDE from 'simplemde'
-import marked from 'marked'
-import highlight from 'highlight.js'
-import 'simplemde/dist/simplemde.min.css'
-// import './index.less'
-import { Select, Input, Button } from 'antd'
+import React, { Component } from 'react';
+import SimpleMDE from 'simplemde';
+import marked from 'marked';
+import highlight from 'highlight.js';
+import 'simplemde/dist/simplemde.min.css';
+import { connect } from 'react-redux';
+import './index.less';
+import { Select, Input, Button } from 'antd';
+import { saveArticle } from '../../store/actions/articles';
 
-export default class index extends Component {
+export default
+@connect(
+  state => state.getIn(['user']),
+  { saveArticle }
+)
+class index extends Component {
   state = {
-    title: '',
-    author: '',
-    tags: '',
-    category: '',
-    keyword: '',
-    desc: '',
-    img_url: '',
-    type: '',
-    origin: ''
-  }
+    title: undefined,
+    img_url: undefined,
+    type: '0',
+  };
   componentDidMount = () => {
     this.setState({
       smde: new SimpleMDE({
@@ -35,16 +36,31 @@ export default class index extends Component {
             smartLists: true,
             smartypants: true,
             highlight(code) {
-              return highlight.highlightAuto(code).value
+              return highlight.highlightAuto(code).value;
             }
-          })
+          });
         }
       })
-    })
-  }
-
+    });
+  };
+  changeTitle = e => {
+    this.setState({ title: e.target.value });
+  };
+  changeImgUrl = e => {
+    this.setState({ img_url: e.target.value });
+  };
+  changeType = e => {
+    this.setState({ type: e });
+  };
+  onSubmit = () => {
+    const { title, img_url, type, smde } = this.state;
+    const { saveArticle, userInfo } = this.props;
+    const content = smde.value();
+    const author = userInfo.name;
+    saveArticle({ title, img_url, type, content ,author});
+  };
   render() {
-    const { title } = this.state
+    const { title, img_url ,type} = this.state;
     return (
       <div>
         <Input
@@ -53,80 +69,28 @@ export default class index extends Component {
           placeholder="标题"
           name="title"
           value={title}
-          onChange={this.props.handleChange}
-        />
-        <Input
-          addonBefore="作者"
-          size="large"
-          placeholder="作者"
-          name="author"
-          value={this.props.author}
-          onChange={this.props.handleChangeAuthor}
-        />
-        <Input
-          addonBefore="关键字"
-          size="large"
-          placeholder="关键字"
-          name="keyword"
-          value={this.props.keyword}
-          onChange={this.props.handleChangeKeyword}
-        />
-        <Input
-          addonBefore="描述"
-          size="large"
-          placeholder="描述"
-          name="desc"
-          value={this.props.desc}
-          onChange={this.props.handleChangeDesc}
+          onChange={this.changeTitle}
         />
         <Input
           addonBefore="封面链接"
           size="large"
           placeholder="封面链接"
           name="img_url"
-          value={this.props.img_url}
-          onChange={this.props.handleChangeImgUrl}
+          value={img_url}
+          onChange={this.changeImgUrl}
         />
 
         <Select
           style={{ width: 200, marginTop: 20, marginBottom: 20 }}
           placeholder="选择发布状态"
-          defaultValue="0"
-          onChange={this.props.handleChangeState}
+          value={type}
+          onChange={this.changeType}
         >
           {/*  0 草稿，1 发布 */}
           <Select.Option value="0">草稿</Select.Option>
           <Select.Option value="1">发布</Select.Option>
         </Select>
 
-        <Select
-          style={{ width: 200, marginTop: 20, marginBottom: 20 }}
-          placeholder="选择文章类型"
-          defaultValue="1"
-          onChange={this.props.handleChangeType}
-        >
-          {/* 文章类型 => 1: 普通文章，2: 简历，3: 管理员介绍 */}
-          <Select.Option value="1">普通文章</Select.Option>
-          <Select.Option value="2">简历</Select.Option>
-          <Select.Option value="3">管理员介绍</Select.Option>
-        </Select>
-
-        <Select
-          style={{
-            width: 200,
-            marginTop: 20,
-            marginLeft: 10,
-            marginBottom: 20
-          }}
-          placeholder="选择文章转载状态"
-          defaultValue="0"
-          onChange={this.props.handleChangeOrigin}
-        >
-          {/* 0 原创，1 转载，2 混合 */}
-          <Select.Option value="0">原创</Select.Option>
-          <Select.Option value="1">转载</Select.Option>
-          <Select.Option value="2">混合</Select.Option>
-        </Select>
         <textarea
           id="editor"
           style={{ marginBottom: 20, width: 800 }}
@@ -139,6 +103,6 @@ export default class index extends Component {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 }
