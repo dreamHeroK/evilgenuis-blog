@@ -148,15 +148,15 @@ class CommentList extends Component {
 				<div className="item">
 					<div className="item-header">
 						<div className="author">
-							<a className="avator">
+							<span className="avator">
 								<Avatar size="large" icon={item.user.avatar} />
-							</a>
+							</span>
 						</div>
 						<div className="info">
-							<a className="name">
+							<span className="name">
 								{item.user.name}
 								{item.user.type === 0 ? '(作者)' : ''}
-							</a>
+							</span>
 							<div className="time">{item.create_time ? timestampToTime(item.create_time,true) : ''}</div>
 						</div>
 					</div>
@@ -165,24 +165,24 @@ class CommentList extends Component {
 						{/* <a className="like">
 							<Avatar size="small" icon="like" /> 赞
 						</a> */}
-						<a onClick={() => this.showCommentModal(item)} className="message">
+						<span onClick={() => this.showCommentModal(item)} className="message">
 							<Avatar size="small" icon="message" /> 回复
-						</a>
+						</span>
 					</div>
 					{item.other_comments.map((e, index) => {
 						return (
 							<div key={e._id} className="item-other">
 								<div className="item-header">
 									<div className="author">
-										<a className="avator">
+										<span className="avator">
 											<Avatar size="large" icon={e.user.avatar} />
-										</a>
+										</span>
 									</div>
 									<div className="info">
-										<a className="name">
+										<span  className="name">
 											{e.user.name}
 											{e.user.type === 0 ? '(作者)' : ''}
-										</a>
+										</span>
 										<div className="time">
 											{e.create_time ? timestampToTime(e.create_time,true) : ''}
 										</div>
@@ -196,9 +196,9 @@ class CommentList extends Component {
 									{/* <a className="like">
 										<Avatar size="small" icon="like" /> 赞
 									</a> */}
-									<a onClick={() => this.showCommentModal(item, e)} className="message">
+									<span onClick={() => this.showCommentModal(item, e)} className="message">
 										<Avatar size="small" icon="message" /> 回复
-									</a>
+									</span>
 								</div>
 							</div>
 						);

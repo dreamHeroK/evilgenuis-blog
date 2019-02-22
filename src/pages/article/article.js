@@ -4,7 +4,7 @@ import logo from '../../assets/logo.jpg';
 import React, { Component } from 'react';
 import Comment from '../comments/comment';
 import CommentList from '../comments/list';
-import { Icon, Avatar, message, Button } from 'antd';
+import { Avatar, message, Button } from 'antd';
 import https from '../../utils/https';
 import urls from '../../utils/urls';
 import LoadingCom from '../loading/loading';
@@ -241,23 +241,17 @@ class Articles extends Component {
 	}
 
 	render() {
-		const list = this.state.articleDetail.tags.map((item, i) => (
-			<span key={item.id} className="tag">
-				{item.name}
-			</span>
-		));
-
 		return (
 			<div className="article">
 				<div className="header">
 					<div className="title">{this.state.articleDetail.title}</div>
 					<div className="author">
-						<a className="avatar" href="">
+						<span className="avatar">
 							<Avatar className="auth-logo" src={logo} size={50} icon="user" />
-						</a>{' '}
+						</span>{' '}
 						<div className="info">
 							<span className="name">
-								<a href="">{this.state.articleDetail.author}</a>
+								<span>{this.state.articleDetail.author}</span>
 							</span>
 							<div props-data-classes="user-follow-button-header" data-author-follow-button="" />
 							<div className="meta">
@@ -272,10 +266,7 @@ class Articles extends Component {
 								<span className="likes-count">喜欢 {this.state.articleDetail.meta.likes}</span>
 							</div>
 						</div>
-						<div className="tags " title="标签">
-							<Icon type="tags" theme="outlined" />
-							{list}
-						</div>
+
 						<span className="clearfix" />
 					</div>
 				</div>

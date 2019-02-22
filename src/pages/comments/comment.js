@@ -2,6 +2,7 @@ import './index.less';
 // import logo from '../../assets/userLogo.jpeg';
 import React, { Component } from 'react';
 import { Avatar, Input } from 'antd';
+import './index.less';
 // import https from '../../utils/https';
 
 const { TextArea } = Input;
@@ -26,9 +27,9 @@ class Comment extends Component {
     }
     return (
       <div className="comment">
-        <a className="avatar">
+        <span className="avatar">
           <Avatar className="auth-logo" size={50} icon="user" />
-        </a>
+        </span>
         <h3>{userInfo.name}</h3>
         <TextArea
           className="textarea"
@@ -40,13 +41,13 @@ class Comment extends Component {
         />
         <div className="new-comment write-function-block">
           {this.props.isSubmitLoading ? (
-            <a className="btn btn-send">发送中...</a>
+            <span className="btn btn-send">发送中...</span>
           ) : (
-            <a onClick={this.props.handleAddComment} className="btn btn-send">
+            <span onClick={this.props.handleAddComment} className="btn btn-send">
               发送
-            </a>
+            </span>
           )}
-          <a className="cancel">取消</a>
+          <span className="cancel">取消</span>
         </div>
       </div>
     );
