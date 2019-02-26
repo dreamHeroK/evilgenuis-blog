@@ -195,12 +195,6 @@ class Articles extends Component {
 			});
 	}
 
-	componentWillUnmount() {
-		document.title = 'BiaoChenXuYing 的博客网站';
-		document.getElementById('keywords').setAttribute('content', 'BiaoChenXuYing 的博客网站');
-		document.getElementById('description').setAttribute('content', '分享 WEB 全栈开发等相关的技术文章，热点资源，全栈程序员的成长之路。');
-	}
-
 	handleClick(event) {
 		this.setState({
 			//   [event.target.name]: event.target.value

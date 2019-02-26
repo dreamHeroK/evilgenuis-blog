@@ -78,9 +78,6 @@ class CommentList extends Component {
 			[event.target.name]: event.target.value,
 		});
 	}
-
-	componentWillMount() {}
-
 	handleAddOtherComment() {
 		if (!this.state.comment_id) {
 			message.warning('该父评论不存在！');
